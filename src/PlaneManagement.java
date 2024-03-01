@@ -2,10 +2,10 @@ import java.util.Scanner;
 
 public class PlaneManagement {
     public static void main(String[] args) throws Exception {
-        System.out.println("\n\t\t\t\t\tWelcome to the Plane Management application\t\t\t\n");
+
         Scanner scan = new Scanner(System.in);
         char[][] seatStructure = planSeats();
-        printMenue();
+        userMenue();
         int userInput = userInputValidator(scan);
         handleUserInput(userInput, seatStructure, scan);
         scan.close();
@@ -22,17 +22,17 @@ public class PlaneManagement {
 
             default:
                 System.out.println("Please Enter valid option");
-                printMenue(); // Display the menu again
+                userMenue(); // Display the menu again
                 userInput = userInputValidator(scan); // Get new user input
                 handleUserInput(userInput, seatStructure, scan);
                 break;
 
         }
-        
 
     }
 
-    public static void printMenue() {
+    public static void userMenue() {
+        System.out.println("\n\t\t\t\t\tWelcome to the Plane Management application\t\t\t\n");
         System.out.println("\t\t\t*****************************************************************");
         System.out.println("\t\t\t*\t\t\t\tMENUE\t\t\t\t*\t\t\t");
         System.out.println("\t\t\t*****************************************************************\n");
@@ -62,7 +62,7 @@ public class PlaneManagement {
             } else {
 
                 System.out.println("\n\t\t\tPlease Enter intiger values shown in the Menue.\n");
-                printMenue();
+                userMenue();
 
                 return userInputValidator(scan);
             }
@@ -70,7 +70,7 @@ public class PlaneManagement {
         } catch (Exception e) {
             System.out.println("\n\t\t\tPlease Enter intiger values shown in the Menue.\n");
             scan.nextLine();
-            printMenue();
+            userMenue();
             return userInputValidator(scan);
         }
     }
@@ -96,7 +96,7 @@ public class PlaneManagement {
             System.out.println("\nPlease Enter Disired Seat number in the given formet.\n");
             buySeat(scan, seatStructure);
         }
-        printMenue();
+        userMenue();
         int userInput = userInputValidator(scan);
         handleUserInput(userInput, seatStructure, scan);
 
