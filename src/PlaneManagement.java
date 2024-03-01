@@ -82,11 +82,19 @@ public class PlaneManagement {
         String seatIndex = scan.nextLine();
 
         try {
-            int column = Integer.parseInt(seatIndex.substring(1));
 
+            int column = Integer.parseInt(seatIndex.substring(1));
             int row = Character.toUpperCase(seatIndex.charAt(0)) - 65;
             // System.out.println(row + " " + column);
+
+            // Checking for valid seat Index
+            if (row < 0 || row >= seatStructure.length || column < 0 || column >= seatStructure[0].length) {
+                System.out.println("\nPlease Enter valid Seat number\n");
+                buySeat(scan, seatStructure);
+            }
+            
             if (isSeatAvailable(seatStructure, row, column)) {
+                seatStructure[row][column] = '1';
                 System.out.println("Your Seat been reserved");
 
             } else {
@@ -104,18 +112,17 @@ public class PlaneManagement {
 
     public static boolean isSeatAvailable(char[][] seatStructure, int row, int column) {
 
-        if (row < 0 || row >= seatStructure.length || column < 0 || column >= seatStructure[0].length) {
-            System.out.println("\nPlease Enter valid Seat number\n");
-            return false;
-        }
+        
 
         if (seatStructure[row][column] == '0') {
-            seatStructure[row][column] = '1';
             return true;
         } else {
             System.out.println("\nSeat is not available !\n");
             return false;
         }
+
+
+
 
     }
 
@@ -162,5 +169,31 @@ public class PlaneManagement {
         }
 
     }
+
+    public static void cencelSeat(Scanner scan,char[][] seatStructure) {
+        System.out.print("\nEnter the Seat number to cencel the seat (eg:A3,B6):");
+        String seatIndex = scan.nextLine();
+
+        try{
+            int column = Integer.parseInt(seatIndex.substring(1));
+
+                /*  i have substract 65 cz in our array index start at 0 but when we cast char "A" to int
+                it become 65 in value to make it zero the 65 substracted    */
+
+            int row = Character.toUpperCase(seatIndex.charAt(0)) - 65;
+            if (isSeatAvailable(seatStructure, row, column)){
+
+            }
+             
+
+        } catch(NumberFormatException e){
+            System.out.println("\nEnter valid seat number in the given Format\n");
+            cencelSeat(scan, seatStructure);
+        }
+
+        
+    }
+
+    
 
 }
