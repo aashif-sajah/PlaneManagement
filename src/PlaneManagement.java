@@ -19,6 +19,9 @@ public class PlaneManagement {
             case 1:
                 buySeat(scan, seatStructure);
                 break;
+            case 2:
+                cencelSeat(scan, seatStructure);
+                break;
 
             default:
                 System.out.println("Please Enter valid option");
@@ -92,12 +95,14 @@ public class PlaneManagement {
                 System.out.println("\nPlease Enter valid Seat number\n");
                 buySeat(scan, seatStructure);
             }
-            
+
             if (isSeatAvailable(seatStructure, row, column)) {
+                
                 seatStructure[row][column] = '1';
-                System.out.println("Your Seat been reserved");
+                System.out.printf("Seat %c%d has Succesfully reserved %n", (char) (row + 65), column);
 
             } else {
+                System.out.printf("Seat %c%d has Already reserved %n", (char) (row + 65), column);
                 buySeat(scan, seatStructure);
             }
         } catch (NumberFormatException e) {
@@ -112,17 +117,11 @@ public class PlaneManagement {
 
     public static boolean isSeatAvailable(char[][] seatStructure, int row, int column) {
 
-        
-
         if (seatStructure[row][column] == '0') {
             return true;
         } else {
-            System.out.println("\nSeat is not available !\n");
             return false;
         }
-
-
-
 
     }
 
@@ -170,30 +169,39 @@ public class PlaneManagement {
 
     }
 
-    public static void cencelSeat(Scanner scan,char[][] seatStructure) {
+    public static void cencelSeat(Scanner scan, char[][] seatStructure) {
         System.out.print("\nEnter the Seat number to cencel the seat (eg:A3,B6):");
         String seatIndex = scan.nextLine();
 
-        try{
+        try {
             int column = Integer.parseInt(seatIndex.substring(1));
 
-                /*  i have substract 65 cz in our array index start at 0 but when we cast char "A" to int
-                it become 65 in value to make it zero the 65 substracted    */
+            /*
+             * i have substract 65 cz in our array index start at 0 but when we cast char
+             * "A" to int
+             * it become 65 in value to make it zero the 65 substracted
+             */
 
             int row = Character.toUpperCase(seatIndex.charAt(0)) - 65;
-            if (isSeatAvailable(seatStructure, row, column)){
-
+            if (row < 0 || row >= seatStructure.length || column < 0 || column >= seatStructure[0].length) {
+                System.out.println("\nPlease Enter valid Seat number\n");
+                cencelSeat(scan, seatStructure);
             }
-             
+            if (!isSeatAvailable(seatStructure, row, column)) {
+                seatStructure[row][column] = '0';
+                System.out.printf("Seat %c%d has Successfully Cencled.%n", (char) (row + 65), column);
+            } else {
+                System.out.printf("Seat %c%d is already free to be booked.%n", (char) (row + 65), column);
+            }
 
-        } catch(NumberFormatException e){
+        } catch (NumberFormatException e) {
             System.out.println("\nEnter valid seat number in the given Format\n");
             cencelSeat(scan, seatStructure);
         }
+        userMenue();
+        int userInput = userInputValidator(scan);
+        handleUserInput(userInput, seatStructure, scan);
 
-        
     }
-
-    
 
 }
