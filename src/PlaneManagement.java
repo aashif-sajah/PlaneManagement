@@ -2,10 +2,10 @@ import java.util.Scanner;
 
 public class PlaneManagement {
     public static void main(String[] args) throws Exception {
-        System.out.println("\n\t\t\t\t\tWelcome to the Plane Management application\t\t\t\n");
+
         Scanner scan = new Scanner(System.in);
         char[][] seatStructure = planSeats();
-        printMenue();
+        userMenue();
         int userInput = userInputValidator(scan);
         handleUserInput(userInput, seatStructure, scan);
         scan.close();
@@ -19,20 +19,23 @@ public class PlaneManagement {
             case 1:
                 buySeat(scan, seatStructure);
                 break;
+            case 2:
+                cencelSeat(scan, seatStructure);
+                break;
 
             default:
                 System.out.println("Please Enter valid option");
-                printMenue(); // Display the menu again
+                userMenue(); // Display the menu again
                 userInput = userInputValidator(scan); // Get new user input
                 handleUserInput(userInput, seatStructure, scan);
                 break;
 
         }
-        
 
     }
 
-    public static void printMenue() {
+    public static void userMenue() {
+        System.out.println("\n\t\t\t\t\tWelcome to the Plane Management application\t\t\t\n");
         System.out.println("\t\t\t*****************************************************************");
         System.out.println("\t\t\t*\t\t\t\tMENUE\t\t\t\t*\t\t\t");
         System.out.println("\t\t\t*****************************************************************\n");
@@ -62,7 +65,7 @@ public class PlaneManagement {
             } else {
 
                 System.out.println("\n\t\t\tPlease Enter intiger values shown in the Menue.\n");
-                printMenue();
+                userMenue();
 
                 return userInputValidator(scan);
             }
@@ -70,7 +73,7 @@ public class PlaneManagement {
         } catch (Exception e) {
             System.out.println("\n\t\t\tPlease Enter intiger values shown in the Menue.\n");
             scan.nextLine();
-            printMenue();
+            userMenue();
             return userInputValidator(scan);
         }
     }
@@ -82,21 +85,31 @@ public class PlaneManagement {
         String seatIndex = scan.nextLine();
 
         try {
-            int column = Integer.parseInt(seatIndex.substring(1));
 
+            int column = Integer.parseInt(seatIndex.substring(1));
             int row = Character.toUpperCase(seatIndex.charAt(0)) - 65;
             // System.out.println(row + " " + column);
+
+            // Checking for valid seat Index
+            if (row < 0 || row >= seatStructure.length || column < 0 || column >= seatStructure[0].length) {
+                System.out.println("\nPlease Enter valid Seat number\n");
+                buySeat(scan, seatStructure);
+            }
+
             if (isSeatAvailable(seatStructure, row, column)) {
-                System.out.println("Your Seat been reserved");
+                
+                seatStructure[row][column] = '1';
+                System.out.printf("Seat %c%d has Succesfully reserved %n", (char) (row + 65), column);
 
             } else {
+                System.out.printf("Seat %c%d has Already reserved %n", (char) (row + 65), column);
                 buySeat(scan, seatStructure);
             }
         } catch (NumberFormatException e) {
             System.out.println("\nPlease Enter Disired Seat number in the given formet.\n");
             buySeat(scan, seatStructure);
         }
-        printMenue();
+        userMenue();
         int userInput = userInputValidator(scan);
         handleUserInput(userInput, seatStructure, scan);
 
@@ -104,16 +117,9 @@ public class PlaneManagement {
 
     public static boolean isSeatAvailable(char[][] seatStructure, int row, int column) {
 
-        if (row < 0 || row >= seatStructure.length || column < 0 || column >= seatStructure[0].length) {
-            System.out.println("\nPlease Enter valid Seat number\n");
-            return false;
-        }
-
         if (seatStructure[row][column] == '0') {
-            seatStructure[row][column] = '1';
             return true;
         } else {
-            System.out.println("\nSeat is not available !\n");
             return false;
         }
 
@@ -160,6 +166,41 @@ public class PlaneManagement {
             }
             System.out.println();
         }
+
+    }
+
+    public static void cencelSeat(Scanner scan, char[][] seatStructure) {
+        System.out.print("\nEnter the Seat number to cencel the seat (eg:A3,B6):");
+        String seatIndex = scan.nextLine();
+
+        try {
+            int column = Integer.parseInt(seatIndex.substring(1));
+
+            /*
+             * i have substract 65 cz in our array index start at 0 but when we cast char
+             * "A" to int
+             * it become 65 in value to make it zero the 65 substracted
+             */
+
+            int row = Character.toUpperCase(seatIndex.charAt(0)) - 65;
+            if (row < 0 || row >= seatStructure.length || column < 0 || column >= seatStructure[0].length) {
+                System.out.println("\nPlease Enter valid Seat number\n");
+                cencelSeat(scan, seatStructure);
+            }
+            if (!isSeatAvailable(seatStructure, row, column)) {
+                seatStructure[row][column] = '0';
+                System.out.printf("Seat %c%d has Successfully Cencled.%n", (char) (row + 65), column);
+            } else {
+                System.out.printf("Seat %c%d is already free to be booked.%n", (char) (row + 65), column);
+            }
+
+        } catch (NumberFormatException e) {
+            System.out.println("\nEnter valid seat number in the given Format\n");
+            cencelSeat(scan, seatStructure);
+        }
+        userMenue();
+        int userInput = userInputValidator(scan);
+        handleUserInput(userInput, seatStructure, scan);
 
     }
 
