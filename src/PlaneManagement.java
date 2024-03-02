@@ -210,26 +210,25 @@ public class PlaneManagement {
 
     public static void findFirstAvailable(char[][] seatStructure, Scanner scan) {
         boolean found = false;
-        for (int row = 0; row < seatStructure.length; row++) {
+        for (int row = 0; row < seatStructure.length;row++) {
             for (int column = 0; column < seatStructure[row].length; column++) {
                 if (seatStructure[row][column] == '0') {
                     found = true;
                     System.out.printf("%nFist available seat is :%c%d%n", (char) (row + 65), column);
                     break;
                 }
-
             }
             if (found) {
-                break;
-            } else {
-                System.out.println("All seat been reserved!");
                 break;
             }
 
         }
+        if (!found) {
+            System.out.println("All seats have been reserved!");
         userMenue();
         int userInput = userInputValidator(scan);
         handleUserInput(userInput, seatStructure, scan);
 
     }
+}
 }
