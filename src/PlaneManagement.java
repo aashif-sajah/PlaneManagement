@@ -23,6 +23,10 @@ public class PlaneManagement {
                 cencelSeat(scan, seatStructure);
                 break;
 
+            case 3:
+                findFirstAvailable(seatStructure, scan);
+                break;
+
             default:
                 System.out.println("Please Enter valid option");
                 userMenue(); // Display the menu again
@@ -97,7 +101,7 @@ public class PlaneManagement {
             }
 
             if (isSeatAvailable(seatStructure, row, column)) {
-                
+
                 seatStructure[row][column] = '1';
                 System.out.printf("Seat %c%d has Succesfully reserved %n", (char) (row + 65), column);
 
@@ -204,4 +208,28 @@ public class PlaneManagement {
 
     }
 
+    public static void findFirstAvailable(char[][] seatStructure, Scanner scan) {
+        boolean found = false;
+        for (int row = 0; row < seatStructure.length; row++) {
+            for (int column = 0; column < seatStructure[row].length; column++) {
+                if (seatStructure[row][column] == '0') {
+                    found = true;
+                    System.out.printf("%nFist available seat is :%c%d%n", (char) (row + 65), column);
+                    break;
+                }
+
+            }
+            if (found) {
+                break;
+            } else {
+                System.out.println("All seat been reserved!");
+                break;
+            }
+
+        }
+        userMenue();
+        int userInput = userInputValidator(scan);
+        handleUserInput(userInput, seatStructure, scan);
+
+    }
 }
