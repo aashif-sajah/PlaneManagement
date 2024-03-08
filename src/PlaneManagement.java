@@ -1,6 +1,8 @@
 import java.util.Scanner;
 
 public class PlaneManagement {
+    private static Ticket[] tickets = new Ticket[100];
+
     public static void main(String[] args) throws Exception {
 
         Scanner scan = new Scanner(System.in);
@@ -103,6 +105,17 @@ public class PlaneManagement {
             if (isSeatAvailable(seatStructure, row, column)) {
 
                 seatStructure[row][column] = '1';
+                Person person = createPerson(scan);
+
+                int seatPrice = seatPriceChecker(column);
+                Ticket ticket = new Ticket(row, column, seatPrice, person);
+                int ticketCount = 0;
+                tickets[ticketCount++] = ticket;
+                // ticket.printTicketInfo();
+                //System.out.println(ticket.getRow());
+                //ticket.setRow(0);
+                //System.out.println(ticket.getRow());
+
                 System.out.printf("Seat %c%d has Succesfully reserved %n", (char) (row + 65), column);
 
             } else {
@@ -210,7 +223,7 @@ public class PlaneManagement {
 
     public static void findFirstAvailable(char[][] seatStructure, Scanner scan) {
         boolean found = false;
-        for (int row = 0; row < seatStructure.length;row++) {
+        for (int row = 0; row < seatStructure.length; row++) {
             for (int column = 0; column < seatStructure[row].length; column++) {
                 if (seatStructure[row][column] == '0') {
                     found = true;
@@ -225,10 +238,45 @@ public class PlaneManagement {
         }
         if (!found) {
             System.out.println("All seats have been reserved!");
-        userMenue();
-        int userInput = userInputValidator(scan);
-        handleUserInput(userInput, seatStructure, scan);
+            userMenue();
+            int userInput = userInputValidator(scan);
+            handleUserInput(userInput, seatStructure, scan);
 
+        }
     }
-}
+
+    public static int seatPriceChecker(int column) {
+        if (column <= 5) {
+            return 200;
+        } else if (column > 5 && column <= 9) {
+            return 150;
+        } else {
+            return 180;
+        }
+    }
+
+    public static Person createPerson(Scanner scan) {
+        String name = "";
+        String surname = "";
+        String email = "";
+
+        try {
+            System.out.print("Enter name: ");
+            name = scan.nextLine();
+
+            System.out.print("Enter surname: ");
+            surname = scan.nextLine();
+
+            System.out.print("Enter email: ");
+            email = scan.nextLine();
+        } catch (Exception e) {
+            System.out.println("An error occurred while inputting person information. Please try again.");
+            // Clear the scanner buffer
+            scan.nextLine();
+            return createPerson(scan); // Recursively call createPerson method to retry input
+        }
+
+        return new Person(name, surname, email);
+    }
+
 }

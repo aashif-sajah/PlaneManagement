@@ -36,10 +36,11 @@ public class Person {
         return email;
     }
 
-    public void displayPersonInfo(){
-        System.out.println("Name: " + name);
+    public void displayPersonInfo() {
+
+        System.out.println("\nName: " + name);
         System.out.println("Surname: " + sureName);
-        System.out.println("Email: " + email);
+        System.out.println("Email: " + email + "\n");
     }
 
 }
