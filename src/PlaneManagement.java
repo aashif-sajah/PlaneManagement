@@ -29,6 +29,10 @@ public class PlaneManagement {
                 findFirstAvailable(seatStructure, scan);
                 break;
 
+            case 4:
+                showSeatingPlane(seatStructure, scan);
+                break;
+
             default:
                 System.out.println("Please Enter valid option");
                 userMenue(); // Display the menu again
@@ -112,9 +116,9 @@ public class PlaneManagement {
                 int ticketCount = 0;
                 tickets[ticketCount++] = ticket;
                 // ticket.printTicketInfo();
-                //System.out.println(ticket.getRow());
-                //ticket.setRow(0);
-                //System.out.println(ticket.getRow());
+                // System.out.println(ticket.getRow());
+                // ticket.setRow(0);
+                // System.out.println(ticket.getRow());
 
                 System.out.printf("Seat %c%d has Succesfully reserved %n", (char) (row + 65), column);
 
@@ -183,6 +187,35 @@ public class PlaneManagement {
             }
             System.out.println();
         }
+
+    }
+
+    public static void showSeatingPlane(char[][] seatStructure, Scanner scan) {
+        // to print the number of columns
+
+        for (int i = 0; i < seatStructure[1].length; i++) {
+            if (i == 0) {
+                System.out.print("   ");
+            } else {
+                System.out.printf("%-3d", i);
+            }
+        }
+        System.out.println();
+        for (int i = 0; i < seatStructure.length; i++) {
+            System.out.printf("%-3c",(char) ('A' + i) ); // Print row label
+            for (int j = 0; j < seatStructure[i].length; j++) {
+                if (seatStructure[i][j] == '0') {
+                    System.out.printf("%-3c", 'O');
+                } else if (seatStructure[i][j] == '1') {
+                    System.out.printf("%-3c", 'X');
+                }
+            }
+            System.out.println();
+        }
+        
+        userMenue(); // Display the menu again
+        int userInput = userInputValidator(scan); // Get new user input
+        handleUserInput(userInput, seatStructure, scan);
 
     }
 
