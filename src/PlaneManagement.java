@@ -39,6 +39,10 @@ public class PlaneManagement {
                 printTicketsInfo(tickets, scan, seatStructure);
                 break;
 
+            case 6:
+                searchTicket(scan, seatStructure);
+                break;
+
             default:
                 System.out.println("Please Enter valid option");
                 userMenue(); // Display the menu again
@@ -283,19 +287,9 @@ public class PlaneManagement {
 
     public static Ticket[] cancelTicket(int row, int column) {
         Ticket[] updatedTicketArray = new Ticket[tickets.length - 1];
-        int ticketIndex = -1;
 
-        // Find the index of the ticket to be canceled
-        for (int i = 0; i < ticketCount; i++) {
-            // System.out.println("Row :"+row);
-            // System.out.println("column :"+column);
-            // System.out.println(tickets[i].getRow());
-            // System.out.println(tickets[i].getSeat());
-            if (tickets[i].getRow() == row + 1 && tickets[i].getSeat() == column) {
-                ticketIndex = i;
-                break;
-            }
-        }
+        int ticketIndex = seatIndexFinder(row,column);  // Find the index of the ticket to be canceled
+
 
         // If ticket not found, return the original ticket array
         if (ticketIndex == -1) {
@@ -315,6 +309,21 @@ public class PlaneManagement {
         ticketCount--;
 
         return updatedTicketArray;
+    }
+
+    private static int seatIndexFinder(int row, int column) {
+        int ticketIndex = -1;
+        for (int i = 0; i < ticketCount; i++) {
+            // System.out.println("Row :"+row);
+            // System.out.println("column :"+column);
+            // System.out.println(tickets[i].getRow());
+            // System.out.println(tickets[i].getSeat());
+            if (tickets[i].getRow() == row + 1 && tickets[i].getSeat() == column) {
+                ticketIndex = i;
+                break;
+            }
+        }
+        return ticketIndex;
     }
 
     public static void findFirstAvailable(char[][] seatStructure, Scanner scan) {
@@ -389,6 +398,37 @@ public class PlaneManagement {
         }
 
         System.out.println("Total amount of tickets sold is :" + totalAmountOfTicketsSold);
+        userMenue();
+        int userInput = userInputValidator(scan);
+        handleUserInput(userInput, seatStructure, scan);
+
+    }
+
+    private static void searchTicket(Scanner scan, char[][] seatStructure) {
+        System.out.print("\nEnter the Seat number to Search the ticket (eg:A3,B6):");
+        String seatIndex = scan.nextLine();
+
+        try {
+            int column = Integer.parseInt(seatIndex.substring(1));
+            int row = Character.toUpperCase(seatIndex.charAt(0)) - 65;
+
+            if (row < 0 || row >= seatStructure.length || column < 0 || column >= seatStructure[0].length) {
+                System.out.println("\nPlease Enter valid Seat number\n");
+                searchTicket(scan, seatStructure);
+            }
+            System.out.println(isSeatAvailable(seatStructure, row, column));
+            if (!isSeatAvailable(seatStructure, row, column)) {
+                int ticketSeatIndex = seatIndexFinder(row, column);
+                tickets[ticketSeatIndex].printTicketInfo();
+               
+            } else {
+                System.out.printf("Seat %c%d is free to be booked.%n", (char) (row + 65), column);
+            }
+
+        } catch (NumberFormatException e) {
+            System.out.println("\nEnter valid seat number in the given Format\n");
+            cencelSeat(scan, seatStructure);
+        }
         userMenue();
         int userInput = userInputValidator(scan);
         handleUserInput(userInput, seatStructure, scan);
