@@ -126,6 +126,7 @@ public class PlaneManagement {
                 // System.out.println(tickets.length);
 
                 tickets[ticketCount++] = ticket;
+                ticket.save();
                 System.out.println("Tickets:");
 
                 // testing Tickets Array
