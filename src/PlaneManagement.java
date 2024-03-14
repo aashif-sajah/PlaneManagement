@@ -35,6 +35,10 @@ public class PlaneManagement {
                 showSeatingPlane(seatStructure, scan);
                 break;
 
+            case 5:
+                printTicketsInfo(tickets, scan, seatStructure);
+                break;
+
             default:
                 System.out.println("Please Enter valid option");
                 userMenue(); // Display the menu again
@@ -115,8 +119,8 @@ public class PlaneManagement {
 
                 int seatPrice = seatPriceChecker(column);
                 Ticket ticket = new Ticket(row, column, seatPrice, person);
-                //System.out.println(tickets.length);
-            
+                // System.out.println(tickets.length);
+
                 tickets[ticketCount++] = ticket;
                 System.out.println("Tickets:");
 
@@ -261,7 +265,7 @@ public class PlaneManagement {
                     }
                     tickets[i].printTicketInfo();
                 }
-                
+
                 System.out.printf("Seat %c%d has Successfully Cencled.%n", (char) (row + 65), column);
             } else {
                 System.out.printf("Seat %c%d is already free to be booked.%n", (char) (row + 65), column);
@@ -280,25 +284,25 @@ public class PlaneManagement {
     public static Ticket[] cancelTicket(int row, int column) {
         Ticket[] updatedTicketArray = new Ticket[tickets.length - 1];
         int ticketIndex = -1;
-    
+
         // Find the index of the ticket to be canceled
         for (int i = 0; i < ticketCount; i++) {
-            System.out.println("Row :"+row);
-            System.out.println("column :"+column);
-            System.out.println(tickets[i].getRow());
-            System.out.println(tickets[i].getSeat());
-            if (tickets[i].getRow() == row+1 && tickets[i].getSeat() == column) {
+            // System.out.println("Row :"+row);
+            // System.out.println("column :"+column);
+            // System.out.println(tickets[i].getRow());
+            // System.out.println(tickets[i].getSeat());
+            if (tickets[i].getRow() == row + 1 && tickets[i].getSeat() == column) {
                 ticketIndex = i;
                 break;
             }
         }
-    
+
         // If ticket not found, return the original ticket array
         if (ticketIndex == -1) {
             System.out.println("Ticket not found in the ticket array");
             return tickets;
         }
-    
+
         // Shift tickets in the array to remove the canceled ticket
         for (int i = 0, k = 0; i < ticketCount; i++) {
             if (i == ticketIndex) {
@@ -306,13 +310,12 @@ public class PlaneManagement {
             }
             updatedTicketArray[k++] = tickets[i];
         }
-    
+
         // Decrease ticket count
         ticketCount--;
-    
+
         return updatedTicketArray;
     }
-    
 
     public static void findFirstAvailable(char[][] seatStructure, Scanner scan) {
         boolean found = false;
@@ -331,11 +334,12 @@ public class PlaneManagement {
         }
         if (!found) {
             System.out.println("All seats have been reserved!");
-            userMenue();
-            int userInput = userInputValidator(scan);
-            handleUserInput(userInput, seatStructure, scan);
-
         }
+
+        userMenue();
+        int userInput = userInputValidator(scan);
+        handleUserInput(userInput, seatStructure, scan);
+
     }
 
     public static int seatPriceChecker(int column) {
@@ -372,4 +376,22 @@ public class PlaneManagement {
         return new Person(name, surname, email);
     }
 
+    private static void printTicketsInfo(Ticket[] tickets, Scanner scan, char[][] seatStructure) {
+
+        double totalAmountOfTicketsSold = 0;
+
+        for (int i = 0; i < tickets.length; i++) {
+            if (tickets[i] == null) {
+                break;
+            }
+            totalAmountOfTicketsSold += tickets[i].getPrice();
+            tickets[i].printTicketInfo();
+        }
+
+        System.out.println("Total amount of tickets sold is :" + totalAmountOfTicketsSold);
+        userMenue();
+        int userInput = userInputValidator(scan);
+        handleUserInput(userInput, seatStructure, scan);
+
+    }
 }
