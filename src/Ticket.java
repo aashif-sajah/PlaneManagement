@@ -1,3 +1,4 @@
+import java.io.*;
 
 public class Ticket {
     private char row;
@@ -7,7 +8,7 @@ public class Ticket {
 
     // Constructor
     public Ticket(int row, int seat, double price, Person person) {
-        this.row = (char)(row + 65);
+        this.row = (char) (row + 65);
         this.seat = seat;
         this.price = price;
         this.person = person;
@@ -19,7 +20,7 @@ public class Ticket {
     }
 
     public void setRow(int row) {
-        this.row = (char)(row + 65);
+        this.row = (char) (row + 65);
     }
 
     public int getSeat() {
@@ -55,5 +56,28 @@ public class Ticket {
             System.out.println("\nPerson Information:\n");
             person.displayPersonInfo();
         }
+    }
+
+    public void save() {
+        String directoryPath = "../tickets/";
+        String fileName = String.format("%c%d.txt", (char) row, seat);
+        String filePath = directoryPath + fileName;
+        try {
+            BufferedWriter writer = new BufferedWriter(new FileWriter(filePath));
+            writer.write("Ticket Information:\n");
+            writer.write("Row: " + (char) row + "\n");
+            writer.write("Seat: " + seat + "\n");
+            writer.write("Price: " + price + "\n");
+            writer.write("\n");
+            writer.write("Passenger Information:\n");
+            writer.write("Name: " + person.getName() + "\n");
+            writer.write("Surname: " + person.getSureName() + "\n");
+            writer.write("Email: " + person.getEmail() + "\n");
+            System.out.println("Ticket information saved to " + fileName);
+            writer.close();
+        } catch (Exception e) {
+            System.out.println("File does not Exist...");
+        }
+
     }
 }
