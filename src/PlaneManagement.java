@@ -1,7 +1,9 @@
+
 import java.util.Scanner;
 
 public class PlaneManagement {
     private static Ticket[] tickets = new Ticket[100];
+    private static int ticketCount = 0;
 
     public static void main(String[] args) throws Exception {
 
@@ -113,8 +115,19 @@ public class PlaneManagement {
 
                 int seatPrice = seatPriceChecker(column);
                 Ticket ticket = new Ticket(row, column, seatPrice, person);
-                int ticketCount = 0;
+                //System.out.println(tickets.length);
+            
                 tickets[ticketCount++] = ticket;
+                System.out.println("Tickets:");
+
+                // testing Tickets Array
+                for (int i = 0; i < tickets.length; i++) {
+                    if (tickets[i] == null) {
+                        break;
+                    }
+                    tickets[i].printTicketInfo();
+                }
+
                 // ticket.printTicketInfo();
                 // System.out.println(ticket.getRow());
                 // ticket.setRow(0);
@@ -202,7 +215,7 @@ public class PlaneManagement {
         }
         System.out.println();
         for (int i = 0; i < seatStructure.length; i++) {
-            System.out.printf("%-3c",(char) ('A' + i) ); // Print row label
+            System.out.printf("%-3c", (char) ('A' + i)); // Print row label
             for (int j = 0; j < seatStructure[i].length; j++) {
                 if (seatStructure[i][j] == '0') {
                     System.out.printf("%-3c", 'O');
@@ -212,7 +225,7 @@ public class PlaneManagement {
             }
             System.out.println();
         }
-        
+
         userMenue(); // Display the menu again
         int userInput = userInputValidator(scan); // Get new user input
         handleUserInput(userInput, seatStructure, scan);
@@ -236,9 +249,19 @@ public class PlaneManagement {
             if (row < 0 || row >= seatStructure.length || column < 0 || column >= seatStructure[0].length) {
                 System.out.println("\nPlease Enter valid Seat number\n");
                 cencelSeat(scan, seatStructure);
+
             }
             if (!isSeatAvailable(seatStructure, row, column)) {
                 seatStructure[row][column] = '0';
+                tickets = cancelTicket(row, column);
+                // testing weather ticket has removed or not
+                for (int i = 0; i < tickets.length; i++) {
+                    if (tickets[i] == null) {
+                        break;
+                    }
+                    tickets[i].printTicketInfo();
+                }
+                
                 System.out.printf("Seat %c%d has Successfully Cencled.%n", (char) (row + 65), column);
             } else {
                 System.out.printf("Seat %c%d is already free to be booked.%n", (char) (row + 65), column);
@@ -253,6 +276,43 @@ public class PlaneManagement {
         handleUserInput(userInput, seatStructure, scan);
 
     }
+
+    public static Ticket[] cancelTicket(int row, int column) {
+        Ticket[] updatedTicketArray = new Ticket[tickets.length - 1];
+        int ticketIndex = -1;
+    
+        // Find the index of the ticket to be canceled
+        for (int i = 0; i < ticketCount; i++) {
+            System.out.println("Row :"+row);
+            System.out.println("column :"+column);
+            System.out.println(tickets[i].getRow());
+            System.out.println(tickets[i].getSeat());
+            if (tickets[i].getRow() == row+1 && tickets[i].getSeat() == column) {
+                ticketIndex = i;
+                break;
+            }
+        }
+    
+        // If ticket not found, return the original ticket array
+        if (ticketIndex == -1) {
+            System.out.println("Ticket not found in the ticket array");
+            return tickets;
+        }
+    
+        // Shift tickets in the array to remove the canceled ticket
+        for (int i = 0, k = 0; i < ticketCount; i++) {
+            if (i == ticketIndex) {
+                continue; // Skip the canceled ticket
+            }
+            updatedTicketArray[k++] = tickets[i];
+        }
+    
+        // Decrease ticket count
+        ticketCount--;
+    
+        return updatedTicketArray;
+    }
+    
 
     public static void findFirstAvailable(char[][] seatStructure, Scanner scan) {
         boolean found = false;
