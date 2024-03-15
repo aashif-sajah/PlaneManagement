@@ -73,7 +73,7 @@ public class Ticket {
             writer.write("Name: " + person.getName() + "\n");
             writer.write("Surname: " + person.getSureName() + "\n");
             writer.write("Email: " + person.getEmail() + "\n");
-            System.out.println("Ticket information saved to " + fileName);
+            System.out.println("\nTicket Information Saved Yo " + fileName);
             writer.close();
         } catch (Exception e) {
             System.out.println("File does not Exist...");
