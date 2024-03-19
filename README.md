@@ -1,23 +1,73 @@
-<<<<<<< HEAD
-## Getting Started
 
-Welcome to the VS Code Java world. Here is a guideline to help you get started to write Java code in Visual Studio Code.
+---
 
-## Folder Structure
+# Plane Management Application
 
-The workspace contains two folders by default, where:
+Welcome to the Plane Management Application repository! This Java application allows users to manage plane seat reservations, ticket purchases, cancellations, and more.
 
-- `src`: the folder to maintain sources
-- `lib`: the folder to maintain dependencies
+## Table of Contents
 
-Meanwhile, the compiled output files will be generated in the `bin` folder by default.
+- [Features](#features)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Contributing](#contributing)
+- [License](#license)
 
-> If you want to customize the folder structure, open `.vscode/settings.json` and update the related settings there.
+## Features
 
-## Dependency Management
+- **Seat Reservation**: Users can buy and cancel plane seats.
+- **Ticket Management**: Tickets are stored with passenger information.
+- **Search Functionality**: Users can search for available seats or specific tickets.
+- **Data Persistence**: Ticket information can be saved to files.
+- **Total Sales Calculation**: The application calculates the total amount of tickets sold during a session.
 
-The `JAVA PROJECTS` view allows you to manage your dependencies. More details can be found [here](https://github.com/microsoft/vscode-java-dependency#manage-dependencies).
-=======
-# PlaneManagement
-First java Project
->>>>>>> f767716006988502e7412130cf6f7d34c90849a6
+## Installation
+
+To run this application locally, follow these steps:
+
+1. Clone the repository to your local machine:
+
+   ```bash
+   git clone https://github.com/your-username/plane-management.git
+   ```
+
+2. Navigate to the project directory:
+
+   ```bash
+   cd plane-management
+   ```
+
+3. Compile the Java files:
+
+   ```bash
+   javac *.java
+   ```
+
+4. Run the main class:
+
+   ```bash
+   java PlaneManagement
+   ```
+
+## Usage
+
+Once the application is running, follow the on-screen instructions to navigate the menu and interact with the features. Use the number keys to select options from the menu.
+
+## Contributing
+
+Contributions are welcome! If you'd like to contribute to this project, please follow these steps:
+
+1. Fork the repository.
+2. Create a new branch (`git checkout -b feature/your-feature-name`).
+3. Make your changes.
+4. Commit your changes (`git commit -am 'Add new feature'`).
+5. Push to the branch (`git push origin feature/your-feature-name`).
+6. Create a new Pull Request.
+
+Please ensure your code follows the existing coding style and includes appropriate documentation and tests.
+
+## License
+
+This project is licensed under the [MIT License](LICENSE).
+
+---
