@@ -49,12 +49,15 @@ public class Ticket {
 
     // Method to print ticket information
     public void printTicketInfo() {
+        System.out.println("\n---------------------------------------------------");
         System.out.println("\nRow: " + row);
         System.out.println("Seat: " + seat);
         System.out.println("Price: £" + price + "\n");
         if (person != null) {
-            System.out.println("\nPerson Information:\n");
+            System.out.println("---------------------------------------------------\n");
+            System.out.println("Person Information:");
             person.displayPersonInfo();
+            System.out.println("---------------------------------------------------");
         }
     }
 

@@ -14,6 +14,7 @@ public class PlaneManagement {
         char[][] seatStructure = planSeats();
 
         // Printing the User Menue
+        System.out.println("\n\t    Welcome to the Plane Management application");
         userMenue();
 
         // Getting the user input and validate it by userInputValidator method
@@ -29,7 +30,9 @@ public class PlaneManagement {
         // With the help of Switch handled the user input to call relevet methods
         switch (userInput) {
             case 0:
-                System.out.println("Thank you for using  Plane Management application");
+                System.out.println("------------------------------------------------------");
+                System.out.println("  Thank you for using  Plane Management application");
+                System.out.println("------------------------------------------------------");
                 break;
             case 1:
                 buySeat(scan, seatStructure);
@@ -68,22 +71,21 @@ public class PlaneManagement {
     public static void userMenue() {
 
         // useds print statemetns to print the user menue in console
-        System.out.println("\n\t\t\t\t\tWelcome to the Plane Management application\t\t\t\n");
-        System.out.println("\t\t\t*****************************************************************");
-        System.out.println("\t\t\t*\t\t\t\tMENUE\t\t\t\t*\t\t\t");
-        System.out.println("\t\t\t*****************************************************************\n");
+        System.out.println("\n*****************************************************************");
+        System.out.println("*\t\t\t\tMENUE\t\t\t\t*");
+        System.out.println("*****************************************************************\n");
         System.out.println("""
-                        \t\t\t1) Buy a seat.
-                        \t\t\t2) Cencel a seat.
-                        \t\t\t3) Find first available seat.
-                        \t\t\t4) Show seating plan.
-                        \t\t\t5) Print ticket information and total sale.
-                        \t\t\t6) Search ticket.
-                        \t\t\t0) Quit
+                        1) Buy a seat.
+                        2) Cencel a seat.
+                        3) Find first available seat.
+                        4) Show seating plan.
+                        5) Print ticket information and total sale.
+                        6) Search ticket.
+                        0) Quit
 
                 """);
-        System.out.println("\t\t\t*****************************************************************");
-        System.out.print("\t\t\tPlease Select An Option : ");
+        System.out.println("*****************************************************************");
+        System.out.print("Please Select An Option : ");
 
     }
 
@@ -222,31 +224,32 @@ public class PlaneManagement {
 
     }
 
-    private static void seatViewer(char[][] seatView) {
-
-        // to print the number of columns
-
-        for (int i = 0; i < seatView[1].length; i++) {
-            if (i == 0) {
-                System.out.print("   ");
-            } else {
-                System.out.printf("%-3d", i);
-            }
-
-        }
-        System.out.println();
-
-        for (char[] row : seatView) {
-            for (char column : row) {
-                System.out.printf("%-3c", column);
-            }
-            System.out.println();
-        }
-
-    }
-
+    /*
+     * private static void seatViewer(char[][] seatView) {
+     * 
+     * // to print the number of columns
+     * 
+     * for (int i = 0; i < seatView[1].length; i++) {
+     * if (i == 0) {
+     * System.out.print("   ");
+     * } else {
+     * System.out.printf("%-3d", i);
+     * }
+     * 
+     * }
+     * System.out.println();
+     * 
+     * for (char[] row : seatView) {
+     * for (char column : row) {
+     * System.out.printf("%-3c", column);
+     * }
+     * System.out.println();
+     * }
+     * 
+     * }
+     */
     public static void showSeatingPlane(char[][] seatStructure, Scanner scan) {
-
+        System.out.println("\n---------------------------------------------------\n");
         // to print the number of columns
         for (int i = 0; i < seatStructure[1].length; i++) {
             if (i == 0) {
@@ -268,6 +271,7 @@ public class PlaneManagement {
             }
             System.out.println();
         }
+        System.out.println("\n---------------------------------------------------\n");
 
         // Display the menu again
         userMenue();
@@ -389,7 +393,7 @@ public class PlaneManagement {
             for (int column = 0; column < seatStructure[row].length; column++) {
                 if (seatStructure[row][column] == '0') {
                     found = true;
-                    System.out.printf("%nFist available seat is :%c%d%n", (char) (row + 65), column);
+                    System.out.printf("%nFist available seat is : %c%d%n", (char) (row + 65), column);
                     break;
                 }
             }
@@ -453,17 +457,23 @@ public class PlaneManagement {
         double totalAmountOfTicketsSold = 0;
 
         // looping through tickets array to get the available ticket prices
-        for (int i = 0; i < tickets.length; i++) {
-            if (tickets[i] == null) {
-                break;
+        if (tickets[0] == null) {
+            System.out.println("\nNo tickets sold during this session\n");
+        } else {
+            for (int i = 0; i < tickets.length; i++) {
+                if (tickets[i] == null) {
+                    break;
+                }
+                totalAmountOfTicketsSold += tickets[i].getPrice();
+                // after finding the ticket index printing the ticket infor using,
+                // printTicketInfo method in ticket class
+                tickets[i].printTicketInfo();
             }
-            totalAmountOfTicketsSold += tickets[i].getPrice();
-            // after finding the ticket index printing the ticket infor using,
-            // printTicketInfo method in ticket class
-            tickets[i].printTicketInfo();
-        }
 
-        System.out.println("Total amount of tickets sold is :" + totalAmountOfTicketsSold);
+            System.out.println("Total amount of tickets sold is :" + totalAmountOfTicketsSold);
+            System.out.println("---------------------------------------------------\n");
+
+        }
 
         // after pring the inportmation
         userMenue();
@@ -486,7 +496,10 @@ public class PlaneManagement {
                 System.out.println("\nPlease Enter valid Seat number\n");
                 searchTicket(scan, seatStructure);
             }
-            System.out.println(isSeatAvailable(seatStructure, row, column));
+            /*
+             * System.out.println(isSeatAvailable(seatStructure, row, column)); used for
+             * debug
+             */
             if (!isSeatAvailable(seatStructure, row, column)) {
                 // getting seat index from seatIndexFinder method
                 int ticketSeatIndex = seatIndexFinder(row, column);
