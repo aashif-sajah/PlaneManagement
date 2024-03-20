@@ -63,7 +63,9 @@ public class Ticket {
     }
 
     public void save() {
-        String directoryPath = "../tickets/";
+        String baseDir = System.getProperty("user.dir");
+        System.out.println(baseDir + File.separator + "Tickets");
+        String directoryPath = baseDir + File.separator + "Tickets";
         String fileName = String.format("%c%d.txt", (char) row, seat);
         String filePath = directoryPath + fileName;
         try {
