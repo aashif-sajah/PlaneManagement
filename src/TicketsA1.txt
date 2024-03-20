@@ -1,0 +1,9 @@
+Ticket Information:
+Row: A
+Seat: 1
+Price: 200.0
+
+Passenger Information:
+Name: aa
+Surname: aa
+Email: aa
