@@ -32,6 +32,7 @@ public class PlaneManagement {
                 System.out.println("------------------------------------------------------");
                 System.out.println("  Thank you for using  Plane Management application");
                 System.out.println("------------------------------------------------------");
+                System.exit(0);
                 break;
             case 1:
                 buySeat(scan, seatStructure);
