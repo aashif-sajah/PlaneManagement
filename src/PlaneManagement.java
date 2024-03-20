@@ -67,7 +67,7 @@ public class PlaneManagement {
 
     }
 
-    public static void userMenue() {
+    private static void userMenue() {
 
         // useds print statemetns to print the user menue in console
         System.out.println("\n*****************************************************************");
@@ -88,7 +88,7 @@ public class PlaneManagement {
 
     }
 
-    public static int userInputValidator(Scanner scan) {
+    private static int userInputValidator(Scanner scan) {
 
         // try : catch used to handle number format exeption and other possible erros
         try {
@@ -113,7 +113,7 @@ public class PlaneManagement {
         }
     }
 
-    public static void buySeat(Scanner scan, char[][] seatStructure) {
+    private static void buySeat(Scanner scan, char[][] seatStructure) {
 
         // user to enter the desired seat number
 
@@ -151,21 +151,21 @@ public class PlaneManagement {
                 /*
                  * These codes used to debug
                  * System.out.println("Tickets:");
-                 * 
+                 *
                  * testing Tickets Array
-                 * 
+                 *
                  * for (int i = 0; i < tickets.length; i++) {
                  * if (tickets[i] == null) {
                  * break;
                  * }
                  * tickets[i].printTicketInfo();
                  * }
-                 * 
+                 *
                  * ticket.printTicketInfo();
                  * System.out.println(ticket.getRow());
                  * ticket.setRow(0);
                  * System.out.println(ticket.getRow());
-                 * 
+                 *
                  */
 
                 System.out.printf("%nSeat %c%d has Succesfully reserved %n", (char) (row + 65), column);
@@ -187,7 +187,7 @@ public class PlaneManagement {
 
     }
 
-    public static boolean isSeatAvailable(char[][] seatStructure, int row, int column) {
+    private static boolean isSeatAvailable(char[][] seatStructure, int row, int column) {
 
         // A simple if condition to check the availabiity of seats
         if (seatStructure[row][column] == '0') {
@@ -225,29 +225,29 @@ public class PlaneManagement {
 
     /*
      * private static void seatViewer(char[][] seatView) {
-     * 
+     *
      * // to print the number of columns
-     * 
+     *
      * for (int i = 0; i < seatView[1].length; i++) {
      * if (i == 0) {
      * System.out.print("   ");
      * } else {
      * System.out.printf("%-3d", i);
      * }
-     * 
+     *
      * }
      * System.out.println();
-     * 
+     *
      * for (char[] row : seatView) {
      * for (char column : row) {
      * System.out.printf("%-3c", column);
      * }
      * System.out.println();
      * }
-     * 
+     *
      * }
      */
-    public static void showSeatingPlane(char[][] seatStructure, Scanner scan) {
+    private static void showSeatingPlane(char[][] seatStructure, Scanner scan) {
         System.out.println("\n---------------------------------------------------\n");
         // to print the number of columns
         for (int i = 0; i < seatStructure[1].length; i++) {
