@@ -29,9 +29,9 @@ public class PlaneManagement {
         // With the help of Switch handled the user input to call relevet methods
         switch (userInput) {
             case 0:
-                System.out.println("------------------------------------------------------");
-                System.out.println("  Thank you for using  Plane Management application");
-                System.out.println("------------------------------------------------------");
+                System.out.println("--------------------------------------------------------------");
+                System.out.println("\tThank you for using  Plane Management application");
+                System.out.println("--------------------------------------------------------------");
                 System.exit(0);
                 break;
             case 1:
@@ -484,7 +484,7 @@ public class PlaneManagement {
             System.out.println("\tNo tickets sold during this session");
             System.out.println("---------------------------------------------------\n");
         } else {
-            System.out.println("\n---------------------------------------------------");
+
             for (int i = 0; i < tickets.length; i++) {
                 if (tickets[i] == null) {
                     break;

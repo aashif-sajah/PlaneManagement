@@ -55,7 +55,7 @@ public class Ticket {
         System.out.println("Seat: " + seat);
         System.out.println("Price: £" + price + "\n");
         if (person != null) {
-            System.out.println("---------------------------------------------------\n");
+            System.out.println("---------------------------------------------------");
             System.out.println("Person Information:");
             person.displayPersonInfo();
             System.out.println("---------------------------------------------------");
@@ -80,7 +80,7 @@ public class Ticket {
             writer.write("Name: " + person.getName() + "\n");
             writer.write("Surname: " + person.getSureName() + "\n");
             writer.write("Email: " + person.getEmail() + "\n");
-            System.out.println("\tTicket Information Saved To " + fileName);
+            System.out.println("Ticket Information Saved To " + fileName);
             writer.close();
         } catch (Exception e) {
             System.out.println("File does not Exist...");
