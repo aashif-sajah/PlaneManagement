@@ -96,18 +96,19 @@ public class PlaneManagement {
             int userInput = scan.nextInt();
             scan.nextLine();
             if (userInput >= 0 && userInput <= 6) {
-
                 return userInput;
             } else {
-
-                System.out.println("\n\t\t\tPlease Enter intiger values shown in the Menue.\n");
+                System.out.println("\n---------------------------------------------------------------");
+                System.out.println("\tPlease Enter intiger values shown in the Menue.");
+                System.out.println("---------------------------------------------------------------\n");
                 userMenue();
-
                 return userInputValidator(scan);
             }
 
         } catch (Exception e) {
-            System.out.println("\n\t\t\tPlease Enter intiger values shown in the Menue.\n");
+            System.out.println("\n---------------------------------------------");
+            System.out.println("Please Enter intiger values shown in the Menue.");
+            System.out.println("---------------------------------------------\n");
             scan.nextLine();
             userMenue();
             return userInputValidator(scan);
@@ -131,7 +132,9 @@ public class PlaneManagement {
 
             // Checking for valid seat Index
             if (row < 0 || row >= seatStructure.length || column < 0 || column >= seatStructure[0].length) {
-                System.out.println("\nPlease Enter valid Seat number\n");
+                System.out.println("\n---------------------------------------------");
+                System.out.println("\tPlease Enter valid Seat number");
+                System.out.println("---------------------------------------------\n");
                 buySeat(scan, seatStructure); // recuring the same method
             }
 
@@ -147,6 +150,7 @@ public class PlaneManagement {
                 // System.out.println(tickets.length);
 
                 tickets[ticketCount++] = ticket;
+                System.out.println("\n--------------------------------------------------");
                 ticket.save();
 
                 /*
@@ -169,16 +173,21 @@ public class PlaneManagement {
                  *
                  */
 
-                System.out.printf("%nSeat %c%d has Succesfully reserved %n", (char) (row + 65), column);
+                System.out.printf("\tSeat %c%d has Succesfully reserved ", (char) (row + 65), column);
+                System.out.println("\n--------------------------------------------------\n");
 
             } else {
-                System.out.printf("%nSeat %c%d has Already reserved %n", (char) (row + 65), column);
+                System.out.println("\n---------------------------------------------");
+                System.out.printf("\tSeat %c%d has Already reserved ", (char) (row + 65), column);
+                System.out.println("\n---------------------------------------------\n");
                 // calling the same method when seat is already booked
                 buySeat(scan, seatStructure);
             }
         } catch (NumberFormatException e) {
             // handling numberFormat error by recalling the same method
-            System.out.println("\nPlease Enter Disired Seat number in the given formet.\n");
+            System.out.println("\n---------------------------------------------------------------------");
+            System.out.println("\tPlease Enter Disired Seat number in the given formet.");
+            System.out.println("---------------------------------------------------------------------\n");
             buySeat(scan, seatStructure);
         }
         // calling the main menuw after user done with buying seat
@@ -300,7 +309,9 @@ public class PlaneManagement {
 
             // a simple if conditon to check the validity
             if (row < 0 || row >= seatStructure.length || column < 0 || column >= seatStructure[0].length) {
-                System.out.println("\nPlease Enter valid Seat number\n");
+                System.out.println("\n---------------------------------------------");
+                System.out.println("\tPlease Enter valid Seat number");
+                System.out.println("---------------------------------------------\n");
                 cencelSeat(scan, seatStructure); // recursing the same method if user input is wrong!!
             }
             // isSeatavailable method return False when seat is available so here ! (not) is
@@ -311,20 +322,25 @@ public class PlaneManagement {
                 seatStructure[row][column] = '0';
                 tickets = cancelTicket(row, column);
                 // testing weather ticket has removed or not
-                for (int i = 0; i < tickets.length; i++) {
+                /* for (int i = 0; i < tickets.length; i++) {
                     if (tickets[i] == null) {
                         break;
                     }
                     tickets[i].printTicketInfo();
-                }
-
-                System.out.printf("Seat %c%d has Successfully Cencled.%n", (char) (row + 65), column);
+                } */
+                System.out.println("\n---------------------------------------------");
+                System.out.printf("\tSeat %c%d has Successfully Cencled.", (char) (row + 65), column);
+                System.out.println("\n---------------------------------------------\n");
             } else {
-                System.out.printf("Seat %c%d is already free to be booked.%n", (char) (row + 65), column);
+                System.out.println("\n-----------------------------------------------------");
+                System.out.printf("\tSeat %c%d is already free to be booked.%n", (char) (row + 65), column);
+                System.out.println("-----------------------------------------------------\n");
             }
 
         } catch (NumberFormatException e) {
-            System.out.println("\nEnter valid seat number in the given Format\n");
+            System.out.println("\n-------------------------------------------------------------");
+            System.out.println("\tEnter valid seat number in the given Format.");
+            System.out.println("-------------------------------------------------------------\n");
             cencelSeat(scan, seatStructure); // recursively callig the same method to handle user input
         }
 
@@ -343,7 +359,9 @@ public class PlaneManagement {
 
         // If ticket not found, return the original ticket array
         if (ticketIndex == -1) {
-            System.out.println("Ticket not found in the ticket array");
+            System.out.println("\n---------------------------------------------");
+            System.out.println("\tTicket not found in the ticket array");
+            System.out.println("---------------------------------------------\n");
             return tickets;
         }
 
@@ -393,7 +411,9 @@ public class PlaneManagement {
             for (int column = 0; column < seatStructure[row].length; column++) {
                 if (seatStructure[row][column] == '0') {
                     found = true;
-                    System.out.printf("%nFist available seat is : %c%d%n", (char) (row + 65), column);
+                    System.out.println("\n---------------------------------------------");
+                    System.out.printf("\tFist available seat is : %c%d%n", (char) (row + 65), column);
+                    System.out.println("---------------------------------------------\n");
                     break;
                 }
             }
@@ -404,7 +424,9 @@ public class PlaneManagement {
         }
         // handling if all seats are reserved condition
         if (!found) {
-            System.out.println("All seats have been reserved!");
+            System.out.println("\t---------------------------------------------------");
+            System.out.println("\tAll seats have been reserved!");
+            System.out.println("---------------------------------------------------\n");
         }
         // calling the main menue
         userMenue();
@@ -458,8 +480,11 @@ public class PlaneManagement {
 
         // looping through tickets array to get the available ticket prices
         if (tickets[0] == null) {
-            System.out.println("\nNo tickets sold during this session\n");
+            System.out.println("\t---------------------------------------------------");
+            System.out.println("\tNo tickets sold during this session");
+            System.out.println("---------------------------------------------------\n");
         } else {
+            System.out.println("\n---------------------------------------------------");
             for (int i = 0; i < tickets.length; i++) {
                 if (tickets[i] == null) {
                     break;
@@ -493,7 +518,9 @@ public class PlaneManagement {
 
             // checking for validity input
             if (row < 0 || row >= seatStructure.length || column < 0 || column >= seatStructure[0].length) {
-                System.out.println("\nPlease Enter valid Seat number\n");
+                System.out.println("\n---------------------------------------------");
+                System.out.println("\tPlease Enter valid Seat number");
+                System.out.println("---------------------------------------------\n");
                 searchTicket(scan, seatStructure);
             }
             /*
@@ -507,11 +534,15 @@ public class PlaneManagement {
                 tickets[ticketSeatIndex].printTicketInfo();
 
             } else {
-                System.out.printf("Seat %c%d is free to be booked.%n", (char) (row + 65), column);
+                System.out.println("\n-----------------------------------------------------");
+                System.out.printf("\tSeat %c%d is free to be booked.%n", (char) (row + 65), column);
+                System.out.println("-----------------------------------------------------\n");
             }
 
         } catch (NumberFormatException e) {
-            System.out.println("\nEnter valid seat number in the given Format\n");
+            System.out.println("\n---------------------------------------------");
+            System.out.println("\tEnter valid seat number in the given Format.");
+            System.out.println("---------------------------------------------\n");
             cencelSeat(scan, seatStructure);
         }
         // calling to main menue

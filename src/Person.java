@@ -19,7 +19,7 @@ public class Person {
     }
 
     public void setSureName(String objSureName) {
-        name = objSureName;
+        sureName = objSureName;
 
     }
 
@@ -28,7 +28,7 @@ public class Person {
     }
 
     public void setEmail(String email) {
-        name = email;
+        this.email = email;
 
     }
 

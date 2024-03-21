@@ -80,7 +80,7 @@ public class Ticket {
             writer.write("Name: " + person.getName() + "\n");
             writer.write("Surname: " + person.getSureName() + "\n");
             writer.write("Email: " + person.getEmail() + "\n");
-            System.out.println("\nTicket Information Saved To " + fileName);
+            System.out.println("\tTicket Information Saved To " + fileName);
             writer.close();
         } catch (Exception e) {
             System.out.println("File does not Exist...");
